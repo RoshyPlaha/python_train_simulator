@@ -16,30 +16,21 @@ class train(object):
         self.journey = journey
         self.init_journey()
         self.allow_move = False
-        self.climb = None
+        self.position = 0
 
     def set_move_status(self, status):
         self.allow_move = status
 
     def draw(self):
-        self.step()
+        self.move()
         pygame.draw.rect(screen, (0,0,0), (self.x, self.y - 2, 40, -10))
 
-    def step(self):
-        if self.allow_move:
+    def move(self):
+        # print(self.x, ' X ', self.journey.routes()[self.position]['start_xy'][0])
+
+        # if self.x != self.journey.routes()[self.position]['start_xy'][0]:
+        if self.x < self.journey.routes()[self.position]['start_xy'][0]:
             self.x += 10
-        # while (train.climb < train.x):
-        # now = pygame.time.get_ticks()
-
-        # if now - self.last >= self.cooldown:
-        #     print('now ', now, ' last ', self.last)
-        #     print('climb is ', self.climb)
-        #     self.last = now
-            
-        #     pygame.draw.rect(screen, (0,20,0), (self.climb, self.y - 2, 40, -10))
-        #     pygame.display.update()
-        #     self.climb = self.climb +1
-
 
     def init_journey(self):
         for x in self.journey.routes():
@@ -52,27 +43,22 @@ class train(object):
     def show_journey(self):
         return self.journey
 
-    def move(self, screen): # to next route in journey. shouldnt be in this class
+    def step(self, screen): # to next route in journey. shouldnt be in this class
         print('moving')
-        position = None
+        current_position = None
         for route in self.journey.routes():
-            i = 0
             if route['headcode'] == self.headcode:
-                position = self.journey.routes().index(route)
+                current_position = self.journey.routes().index(route)
                 break
-        print('position number: ', position)
+        print('current position number: ', current_position)
+        self.position = current_position+1
+        print('new position number: ', self.position)
         try:
-            if position is not None:
-                self.journey.routes()[position]['headcode'] = None
-                self.journey.routes()[position+1]['headcode'] = self.headcode
+            if current_position is not None:
+                self.journey.routes()[current_position]['headcode'] = None
+                self.journey.routes()[self.position]['headcode'] = self.headcode
 
-                self.x_diff = self.journey.routes()[position+1]['start_xy'][0] - self.journey.routes()[position]['start_xy'][0]
-                self.y_diff = self.journey.routes()[position+1]['start_xy'][1] - self.journey.routes()[position]['start_xy'][1]
-
-                self.x = self.journey.routes()[position+1]['start_xy'][0]
-                self.y = self.journey.routes()[position+1]['start_xy'][1]
-
-                self.climb = self.x - self.x_diff
+                print('Should now start at: x ', self.journey.routes()[self.position]['start_xy'][0])
 
         except IndexError:
             print('end of the road')
@@ -121,21 +107,20 @@ def redrawGameWindow():
     train.draw()
 
     if train.allow_move:
-        train.move(screen)
+        train.step(screen)
         train.set_move_status(False)
 
-    
     pygame.display.update()
 
 
 journey = journey()
+journey.add_route(journey1.route0)
 journey.add_route(journey1.route1)
 journey.add_route(journey1.route2)
 journey.add_route(journey1.route3)
 journey.add_route(journey1.route4)
 journey.add_route(journey1.route5)
 journey.add_route(journey1.route6)
-journey.add_route(journey1.route7)
 train = train('1A11', journey)
 
 clock = pygame.time.Clock()
