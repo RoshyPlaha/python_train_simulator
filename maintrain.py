@@ -28,9 +28,9 @@ class train(object):
     def move(self):
         # print(self.x, ' X ', self.journey.routes()[self.position]['start_xy'][0])
 
-        # if self.x != self.journey.routes()[self.position]['start_xy'][0]:
-        if self.x < self.journey.routes()[self.position]['start_xy'][0]:
-            self.x += 10
+        if self.x != self.journey.routes()[self.position]['start_xy'][0]:
+            if self.x < self.journey.routes()[self.position]['start_xy'][0]:
+                self.x += 10
 
     def init_journey(self):
         for x in self.journey.routes():
