@@ -16,7 +16,7 @@ class train(object):
         self.journey = journey
         self.init_journey()
         self.allow_move = False
-        self.position = 0
+        self.position = 0 # this is its next position
 
     def set_move_status(self, status):
         self.allow_move = status
@@ -26,11 +26,15 @@ class train(object):
         pygame.draw.rect(screen, (0,0,0), (self.x, self.y - 2, 40, -10))
 
     def move(self):
-        # print(self.x, ' X ', self.journey.routes()[self.position]['start_xy'][0])
-
         if self.x != self.journey.routes()[self.position]['start_xy'][0]:
             if self.x < self.journey.routes()[self.position]['start_xy'][0]:
                 self.x += 10
+        
+        if self.y != self.journey.routes()[self.position]['start_xy'][1]:
+            if self.y < self.journey.routes()[self.position]['start_xy'][1]:
+                self.y += 10
+            if self.y > self.journey.routes()[self.position]['start_xy'][1]:
+                self.y -= 10
 
     def init_journey(self):
         for x in self.journey.routes():
@@ -43,7 +47,7 @@ class train(object):
     def show_journey(self):
         return self.journey
 
-    def step(self, screen): # to next route in journey. shouldnt be in this class
+    def step(self, screen): # to next route in journey.
         print('moving')
         current_position = None
         for route in self.journey.routes():
@@ -59,6 +63,7 @@ class train(object):
                 self.journey.routes()[self.position]['headcode'] = self.headcode
 
                 print('Should now start at: x ', self.journey.routes()[self.position]['start_xy'][0])
+                print('Should now start at: y ', self.journey.routes()[self.position]['start_xy'][1])
 
         except IndexError:
             print('end of the road')
