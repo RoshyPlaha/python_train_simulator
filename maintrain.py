@@ -1,5 +1,6 @@
 import pygame
 import pygame.math as math
+import math as mathpy
 from journeys import journey1
 pygame.init()
 screen = pygame.display.set_mode((1000, 480))
@@ -17,6 +18,8 @@ class train(object):
         self.init_journey()
         self.allow_move = False
         self.position = 0 # this is its next position
+        self.yx = 0
+        self.yd = 0
 
     def set_move_status(self, status):
         self.allow_move = status
@@ -26,15 +29,47 @@ class train(object):
         pygame.draw.rect(screen, (0,0,0), (self.x, self.y - 2, 40, -10))
 
     def move(self):
-        if self.x != self.journey.routes()[self.position]['start_xy'][0]:
-            if self.x < self.journey.routes()[self.position]['start_xy'][0]:
-                self.x += 10
+        # if self.x != self.journey.routes()[self.position]['start_xy'][0]:
+        #     if self.x < self.journey.routes()[self.position]['start_xy'][0]:
+        #         self.x += 10
         
-        if self.y != self.journey.routes()[self.position]['start_xy'][1]:
-            if self.y < self.journey.routes()[self.position]['start_xy'][1]:
-                self.y += 10
-            if self.y > self.journey.routes()[self.position]['start_xy'][1]:
-                self.y -= 10
+        distance = mathpy.sqrt((self.yx * self.yx) + (self.yd * self.yd))
+        speed = 10 
+        if distance > 1:
+            if self.x < self.journey.routes()[self.position]['start_xy'][0]:
+                    # self.x += 10
+                speed_x = speed * (self.yx / distance)
+                self.x -= speed_x
+
+            scale = 1
+            if (self.y < self.journey.routes()[self.position]['start_xy'][1]):
+                scale = scale * -1
+                speed_y = speed * (self.yd / distance) * scale
+                self.y += speed_y
+            else:
+                speed_y = speed * (self.yd / distance) * scale
+                self.y -= speed_y
+
+
+
+                   # if self.y != self.journey.routes()[self.position]['start_xy'][1]:
+        #     print(self.yx ,' and y: ', self.yd)
+                # if self.yx % mathpy.ceil(cc) == 0:
+                #     self.y += 10
+            
+            # if self.yx > self.yd:
+            #     cc = self.yx / self.yd
+            #     if self.yx % mathpy.ceil(cc) == 0:
+            #         self.y += 10
+
+                #     print('new position number: ', self.position, ' x: ', self.x, ' y: ', self.y, ' is a triangle of xd: ', self.xd , ' yd: ', self.yd , ' distance: ', distance)
+                
+
+        # if self.y != self.journey.routes()[self.position]['start_xy'][1]:
+        #     if self.y < self.journey.routes()[self.position]['start_xy'][1]:
+        #         self.y += 10
+        #     if self.y > self.journey.routes()[self.position]['start_xy'][1]:
+        #         self.y -= 10
 
     def init_journey(self):
         for x in self.journey.routes():
@@ -49,22 +84,30 @@ class train(object):
 
     def step(self, screen): # to next route in journey.
         print('moving')
+        y = None
+        x = None
         current_position = None
         for route in self.journey.routes():
             if route['headcode'] == self.headcode:
                 current_position = self.journey.routes().index(route)
                 break
         print('current position number: ', current_position)
-        self.position = current_position+1
-        print('new position number: ', self.position)
         try:
             if current_position is not None:
                 self.journey.routes()[current_position]['headcode'] = None
-                self.journey.routes()[self.position]['headcode'] = self.headcode
+                self.journey.routes()[current_position+1]['headcode'] = self.headcode # move headcode to next position
 
-                print('Should now start at: x ', self.journey.routes()[self.position]['start_xy'][0])
-                print('Should now start at: y ', self.journey.routes()[self.position]['start_xy'][1])
+                x = self.journey.routes()[current_position+1]['start_xy'][0] # move x and y to new future position
+                y = self.journey.routes()[current_position+1]['start_xy'][1]
+               
+                # but in order to use new position above, this is your difference to get there
+                self.yd = self.journey.routes()[current_position]['start_xy'][1] - self.journey.routes()[current_position]['end_xy'][1] 
+                self.yx = self.journey.routes()[current_position]['start_xy'][0] - self.journey.routes()[current_position]['end_xy'][0]
 
+                print('data available: x ', self.x, 'x: ', self.y,  'yx: ', self.yx, ' yd: ', self.yd)
+                # and lets lock in the new position globally so draw() can have a target
+                self.position = current_position+1
+ 
         except IndexError:
             print('end of the road')
         
