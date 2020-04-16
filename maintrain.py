@@ -29,10 +29,6 @@ class train(object):
         pygame.draw.rect(screen, (0,0,0), (self.x, self.y, 40, -10))
 
     def move(self):
-        # if self.x != self.journey.routes()[self.position]['start_xy'][0]:
-        #     if self.x < self.journey.routes()[self.position]['start_xy'][0]:
-        #         self.x += 10
-        
         distance = mathpy.sqrt((self.yx * self.yx) + (self.yd * self.yd))
         speed = 10 
         if distance > 1:
@@ -48,26 +44,6 @@ class train(object):
                 speed_y = speed * (self.yd / distance) * scale
                 self.y += speed_y
                 self.y = round(self.y, 0)
-
-
-                   # if self.y != self.journey.routes()[self.position]['start_xy'][1]:
-        #     print(self.yx ,' and y: ', self.yd)
-                # if self.yx % mathpy.ceil(cc) == 0:
-                #     self.y += 10
-            
-            # if self.yx > self.yd:
-            #     cc = self.yx / self.yd
-            #     if self.yx % mathpy.ceil(cc) == 0:
-            #         self.y += 10
-
-                #     print('new position number: ', self.position, ' x: ', self.x, ' y: ', self.y, ' is a triangle of xd: ', self.xd , ' yd: ', self.yd , ' distance: ', distance)
-                
-
-        # if self.y != self.journey.routes()[self.position]['start_xy'][1]:
-        #     if self.y < self.journey.routes()[self.position]['start_xy'][1]:
-        #         self.y += 10
-        #     if self.y > self.journey.routes()[self.position]['start_xy'][1]:
-        #         self.y -= 10
 
     def init_journey(self):
         for x in self.journey.routes():
@@ -102,7 +78,7 @@ class train(object):
                 self.yd = self.journey.routes()[current_position]['start_xy'][1] - self.journey.routes()[current_position]['end_xy'][1] 
                 self.yx = self.journey.routes()[current_position]['start_xy'][0] - self.journey.routes()[current_position]['end_xy'][0]
 
-                print('data available: x ', self.x, 'x: ', self.y,  'yx: ', self.yx, ' yd: ', self.yd)
+                # print('data available: x ', self.x, 'x: ', self.y,  'yx: ', self.yx, ' yd: ', self.yd)
                 # and lets lock in the new position globally so draw() can have a target
                 self.position = current_position+1
  
