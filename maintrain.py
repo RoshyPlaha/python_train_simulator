@@ -26,7 +26,7 @@ class train(object):
 
     def draw(self):
         self.move()
-        pygame.draw.rect(screen, (0,0,0), (self.x, self.y - 2, 40, -10))
+        pygame.draw.rect(screen, (0,0,0), (self.x, self.y, 40, -10))
 
     def move(self):
         # if self.x != self.journey.routes()[self.position]['start_xy'][0]:
@@ -36,20 +36,18 @@ class train(object):
         distance = mathpy.sqrt((self.yx * self.yx) + (self.yd * self.yd))
         speed = 10 
         if distance > 1:
-            if self.x < self.journey.routes()[self.position]['start_xy'][0]:
+            if self.x <= self.journey.routes()[self.position]['start_xy'][0]:
                     # self.x += 10
                 speed_x = speed * (self.yx / distance)
                 self.x -= speed_x
 
             scale = 1
-            if (self.y < self.journey.routes()[self.position]['start_xy'][1]):
+            print ('self y ', self.y, ' stepped position: ', self.journey.routes()[self.position]['start_xy'][1])
+            if (self.y != self.journey.routes()[self.position]['start_xy'][1]):
                 scale = scale * -1
                 speed_y = speed * (self.yd / distance) * scale
                 self.y += speed_y
-            else:
-                speed_y = speed * (self.yd / distance) * scale
-                self.y -= speed_y
-
+                self.y = round(self.y, 0)
 
 
                    # if self.y != self.journey.routes()[self.position]['start_xy'][1]:
