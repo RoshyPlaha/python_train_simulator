@@ -123,18 +123,24 @@ class signal(object): # A signal is at the start of a route
         self.colour = colour
         self.x = x
         self.y = y
+        self.create_signal_coords()
+
+    def create_signal_coords(self):
+        self.bulb_position = (self.x-10, self.y-22)
+        self.stalk = [(self.x, self.y), (self.x, self.y-22), (self.x - 8, self.y-22)]
 
     def draw(self):
-        radius = 5
-        pygame.draw.aalines(screen, (0, 0, 0), False, [(self.x, self.y), (self.x, self.y-22), (self.x - 8, self.y-22)])
-        pygame.draw.circle(screen, (0, 0, 0), (self.x-10,self.y-22), radius)
+        border_radius = 5
+        colour_radius = border_radius - 2
+        pygame.draw.aalines(screen, (0, 0, 0), False, self.stalk)
+        pygame.draw.circle(screen, (0, 0, 0), self.bulb_position, border_radius)
         
         if (self.colour.name == 'YELLOW'):
-            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), radius-2)
+            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), colour_radius)
         elif (self.colour.name == 'GREEN'):
-            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), radius-2)
+            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), colour_radius)
         else:
-            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), radius-2)
+            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), colour_radius)
         
 class journey(object):
 
@@ -164,7 +170,6 @@ class journey(object):
     
     def routes(self):
         return self.ordered_routes
-        # return self.valid_order_routes
 
     def draw(self):
         for route in self.ordered_routes: # draw route lines
