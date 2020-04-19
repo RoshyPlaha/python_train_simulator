@@ -1,6 +1,7 @@
 import pygame
 import pygame.math as math
 import math as mathpy
+from enum import Enum
 from journeys import journey1
 pygame.init()
 screen = pygame.display.set_mode((1000, 480))
@@ -15,18 +16,18 @@ class train(object):
         self.y = None
         self.headcode = headcode
         self.journey = journey
-        self.init_journey()
         self.allow_move = False
-        self.next_position = 0 # this is its next position
+        self.next_position = 0
         self.yx = 0
         self.yd = 0
+        self.init_journey()
 
     def set_move_status(self, status):
         self.allow_move = status
 
     def draw(self):
         self.move()
-        pygame.draw.rect(screen, (0,0,0), (self.x, self.y, 40, -10))
+        pygame.draw.rect(screen, (255,0,0), (self.x, self.y, -40, -10))
 
     def move(self):
         distance = mathpy.sqrt((self.yx * self.yx) + (self.yd * self.yd))
@@ -56,8 +57,6 @@ class train(object):
 
     def step(self, screen): # to next route in journey.
         print('moving')
-        y = None
-        x = None
         current_position = None
         for route in self.journey.routes():
             if route.get_headcode() == self.headcode:
@@ -68,9 +67,6 @@ class train(object):
             if current_position is not None:
                 self.journey.routes()[current_position].set_headcode(None) #['headcode'] = None
                 self.journey.routes()[current_position+1].set_headcode(self.headcode) #['headcode'] = self.headcode # move headcode to next position
-
-                x = self.journey.routes()[current_position+1].get_start_route_coord()[0] # move x and y to new future position
-                y = self.journey.routes()[current_position+1].get_start_route_coord()[1] 
                
                 # but in order to use new position above, this is your difference to get there
                 self.yd = self.journey.routes()[current_position].get_start_route_coord()[1] - self.journey.routes()[current_position].get_end_route_coord()[1] 
@@ -82,7 +78,6 @@ class train(object):
         except IndexError:
             print('end of the road')
 
-
 class route(object):
 
     def __init__(self, routeName, start_xy, end_xy):
@@ -90,6 +85,7 @@ class route(object):
         self.start_xy = start_xy
         self.end_xy = end_xy
         self.headcode = None
+        self.signal = signal(aspect.RED, self.start_xy[0], self.start_xy[1])
 
     def get_route_coord(self):
         print ('Returning Route: ', self.start_xy, self.end_xy)
@@ -107,7 +103,32 @@ class route(object):
     def get_end_route_coord(self):
         return self.end_xy
 
+    def get_signal(self):
+        return self.signal()
 
+    def draw(self):
+        start = self.start_xy
+        end = self.end_xy
+        pygame.draw.aalines(screen, (0, 0, 0), False, [start, end])
+        self.signal.draw()
+
+class aspect(Enum):
+    RED = 0
+    YELLOW = 1
+    GREEN = 2
+
+class signal(object): # A signal is at the start of a route
+
+    def __init__(self, colour, x, y):
+        self.colour = colour
+        self.x = x
+        self.y = y
+
+    def draw(self):
+        radius = 4
+        pygame.draw.aalines(screen, (0, 0, 0), False, [(self.x, self.y), (self.x, self.y-22), (self.x - 8, self.y-22)])
+        pygame.draw.circle(screen, (0,0,0), (self.x-10,self.y-22), radius)
+        
 class journey(object):
 
     valid_order_routes = []
@@ -140,15 +161,12 @@ class journey(object):
 
     def draw(self):
         for route in self.ordered_routes: # draw route lines
-            start = route.get_start_route_coord()
-            end = route.get_end_route_coord()
-            pygame.draw.aalines(screen, (255, 0, 0), False, [start, end])
+            route.draw()
 
 def redrawGameWindow():
 
     last = pygame.time.get_ticks()
     cooldown = 10
-    # man.draw(win)    
     screen.blit(background, (0, 0))
     journey.draw()
 
