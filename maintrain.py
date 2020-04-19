@@ -33,12 +33,10 @@ class train(object):
         speed = 10 
         if distance > 1:
             if self.x <= self.journey.routes()[self.position]['start_xy'][0]:
-                    # self.x += 10
                 speed_x = speed * (self.yx / distance)
                 self.x -= speed_x
 
             scale = 1
-            print ('self y ', self.y, ' stepped position: ', self.journey.routes()[self.position]['start_xy'][1])
             if (self.y != self.journey.routes()[self.position]['start_xy'][1]):
                 scale = scale * -1
                 speed_y = speed * (self.yd / distance) * scale
