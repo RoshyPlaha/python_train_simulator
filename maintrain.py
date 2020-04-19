@@ -113,9 +113,9 @@ class route(object):
         self.signal.draw()
 
 class aspect(Enum):
-    RED = 0
-    YELLOW = 1
-    GREEN = 2
+    RED = (255, 0, 0)
+    YELLOW = (255, 255, 0)
+    GREEN = (0, 128, 0)
 
 class signal(object): # A signal is at the start of a route
 
@@ -125,9 +125,16 @@ class signal(object): # A signal is at the start of a route
         self.y = y
 
     def draw(self):
-        radius = 4
+        radius = 5
         pygame.draw.aalines(screen, (0, 0, 0), False, [(self.x, self.y), (self.x, self.y-22), (self.x - 8, self.y-22)])
-        pygame.draw.circle(screen, (0,0,0), (self.x-10,self.y-22), radius)
+        pygame.draw.circle(screen, (0, 0, 0), (self.x-10,self.y-22), radius)
+        
+        if (self.colour.name == 'YELLOW'):
+            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), radius-2)
+        elif (self.colour.name == 'GREEN'):
+            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), radius-2)
+        else:
+            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), radius-2)
         
 class journey(object):
 
