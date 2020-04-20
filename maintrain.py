@@ -133,7 +133,7 @@ class signal(object): # A signal is at the start of a route
         border_radius = 5
         colour_radius = border_radius - 2
         pygame.draw.aalines(screen, (0, 0, 0), False, self.stalk)
-        pygame.draw.circle(screen, (0, 0, 0), self.bulb_position, border_radius)
+        self.bulb_space = pygame.draw.circle(screen, (0, 0, 0), self.bulb_position, border_radius)
         
         if (self.colour.name == 'YELLOW'):
             pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), colour_radius)
@@ -209,6 +209,14 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        
+        if event.type == pygame.MOUSEBUTTONUP:
+            pos = pygame.mouse.get_pos()
+            for route in journey.routes():
+                if(route.signal.bulb_space.collidepoint(pos)):
+                    print('fire')
+                    route.signal.colour = aspect.GREEN
+
 
     if shootLoop > 0:
         shootLoop += 1
