@@ -124,10 +124,22 @@ class signal(object): # A signal is at the start of a route
         self.x = x
         self.y = y
         self.create_signal_coords()
+        self.click = 0
+        self.aspect = [aspect.RED, aspect.YELLOW, aspect.GREEN]
 
     def create_signal_coords(self):
         self.bulb_position = (self.x-10, self.y-22)
         self.stalk = [(self.x, self.y), (self.x, self.y-22), (self.x - 8, self.y-22)]
+
+    def iterate_aspect(self):
+        self.click +=1
+
+        if self.click >= 3:
+            self.click = 0
+
+        for i,x in enumerate(self.aspect):
+            if i == self.click:
+                self.colour = x
 
     def draw(self):
         border_radius = 5
@@ -190,7 +202,6 @@ def redrawGameWindow():
 
     pygame.display.update()
 
-
 journey = journey()
 journey.add_route(journey1.route0)
 journey.add_route(journey1.route1)
@@ -214,8 +225,7 @@ while run:
             pos = pygame.mouse.get_pos()
             for route in journey.routes():
                 if(route.signal.bulb_space.collidepoint(pos)):
-                    print('fire')
-                    route.signal.colour = aspect.GREEN
+                    route.signal.iterate_aspect()
 
 
     if shootLoop > 0:
@@ -230,5 +240,5 @@ while run:
         train.set_move_status(True)
 
     redrawGameWindow()
-    
+
 pygame.quit()
