@@ -55,6 +55,12 @@ class train(object):
     def show_journey(self):
         return self.journey
 
+    def get_current_route(self):
+        for i, n in enumerate(self.journey.routes()):
+            if n.get_headcode() == self.headcode:
+                print('inside ', i)
+                return n
+
     def step(self, screen): # to next route in journey.
         print('moving')
         current_position = None
@@ -156,7 +162,7 @@ class signal(object): # A signal is at the start of a route
         
 class journey(object):
 
-    valid_order_routes = []
+    valid_order_routes = [] # remove this
     ordered_routes = []
     
     def __init__(self):
@@ -197,7 +203,8 @@ def redrawGameWindow():
     train.draw()
 
     if train.allow_move:
-        train.step(screen)
+        if train.get_current_route().signal.colour != aspect.RED:
+            train.step(screen)
         train.set_move_status(False)
 
     pygame.display.update()
@@ -226,7 +233,6 @@ while run:
             for route in journey.routes():
                 if(route.signal.bulb_space.collidepoint(pos)):
                     route.signal.iterate_aspect()
-
 
     if shootLoop > 0:
         shootLoop += 1
