@@ -2,7 +2,8 @@ import pygame
 import pygame.math as math
 import math as mathpy
 from enum import Enum
-from paths import path1
+from routes_list import route_set_1
+
 pygame.init()
 screen = pygame.display.set_mode((1000, 480))
 background = pygame.Surface(screen.get_size())
@@ -209,10 +210,16 @@ def redrawGameWindow():
     pygame.display.update()
             
 journey = journey()
-journey.add_route(path1.route0)
-journey.add_route(path1.route1)
-journey.add_route(path1.route2)
-journey.add_route(path1.route3)
+journey.add_route(route_set_1.route0)
+journey.add_route(route_set_1.route1)
+journey.add_route(route_set_1.route2)
+journey.add_route(route_set_1.route3)
+
+
+# add paths to points. rename journey to be path
+# toggle points setting
+# update paths presented to train
+
 # journey.add_route(path1.route4)
 # journey.add_route(path1.route5)
 # journey.add_route(path1.route6)
