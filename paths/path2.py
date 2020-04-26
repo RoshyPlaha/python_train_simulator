@@ -33,17 +33,3 @@ route4 = (
         'end_xy': (950, 120)
     }
 )
-route5 = (
-    {
-        'routeName': 'bbb',
-        'start_xy': (950, 120),
-        'end_xy': (980, 120)
-    }
-)
-route6 = (
-    {
-        'routeName': 'bbb',
-        'start_xy': (980, 120),
-        'end_xy': (1000, 120)
-    }
-)

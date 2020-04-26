@@ -2,7 +2,7 @@ import pygame
 import pygame.math as math
 import math as mathpy
 from enum import Enum
-from journeys import journey1
+from paths import path1
 pygame.init()
 screen = pygame.display.set_mode((1000, 480))
 background = pygame.Surface(screen.get_size())
@@ -83,7 +83,6 @@ class train(object):
  
         except IndexError:
             print('end of the road')
-
 class route(object):
 
     def __init__(self, routeName, start_xy, end_xy):
@@ -208,15 +207,16 @@ def redrawGameWindow():
         train.set_move_status(False)
 
     pygame.display.update()
-
+            
 journey = journey()
-journey.add_route(journey1.route0)
-journey.add_route(journey1.route1)
-journey.add_route(journey1.route2)
-journey.add_route(journey1.route3)
-journey.add_route(journey1.route4)
-journey.add_route(journey1.route5)
-journey.add_route(journey1.route6)
+journey.add_route(path1.route0)
+journey.add_route(path1.route1)
+journey.add_route(path1.route2)
+journey.add_route(path1.route3)
+# journey.add_route(path1.route4)
+# journey.add_route(path1.route5)
+# journey.add_route(path1.route6)
+
 train = train('1A11', journey)
 
 clock = pygame.time.Clock()
