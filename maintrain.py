@@ -2,7 +2,7 @@ import pygame
 import pygame.math as math
 import math as mathpy
 from enum import Enum
-from routes_list import route_set_1, route_set_2
+from routes_list import route_set_1, route_set_2, route_set_3
 from point import point
 from signal import signal, aspect
 
@@ -120,12 +120,6 @@ class route(object):
         pygame.draw.aalines(screen, (0, 0, 0), False, [start, end])
         self.signal.draw()
 
-class aspect(Enum):
-    RED = (255, 0, 0)
-    YELLOW = (255, 255, 0)
-    GREEN = (0, 128, 0)
-
-
 class journey(object):
 
     valid_order_routes = [] # remove this
@@ -161,8 +155,6 @@ class journey(object):
 
 def redrawGameWindow():
 
-    last = pygame.time.get_ticks()
-    cooldown = 10
     screen.blit(background, (0, 0))
     journey.draw()
 
@@ -192,14 +184,18 @@ journey.add_route(route_set_1.route3)
 # journey.add_route(path1.route6)
 
 point1 = point()
-path1 = []
-path1.append(route_set_2.route0)
-path1.append(route_set_2.route1)
-path1.append(route_set_2.route2)
+path_a = []
+path_a.append(route(route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
+path_a.append(route(route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
+path_a.append(route(route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
 
-for p in path1:
-    point1.add_paths(route(p['routeName'], p['start_xy'], p['end_xy']))
+path_b = []
+path_b.append(route(route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
+path_b.append(route(route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
+path_b.append(route(route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy']))
 
+point1.add_paths(path_a)
+point1.add_paths(path_b)
 
 train = train('1A11', journey)
 

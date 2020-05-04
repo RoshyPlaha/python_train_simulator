@@ -31,7 +31,6 @@ class point(object):
                 print('not found brudda: ', i)
     
     def draw(self, pygame, screen):
-        for route in self.route_paths:
-            start = route.get_start_route_coord()
-            end = route.get_end_route_coord()
-            pygame.draw.aalines(screen, (0, 0, 0), False, [start, end])
+        for path in self.route_paths:
+            for route in path:
+                route.draw()
