@@ -2,7 +2,9 @@ import pygame
 import pygame.math as math
 import math as mathpy
 from enum import Enum
-from routes_list import route_set_1
+from routes_list import route_set_1, route_set_2
+from point import point
+from signal import signal, aspect
 
 pygame.init()
 screen = pygame.display.set_mode((1000, 480))
@@ -91,7 +93,7 @@ class route(object):
         self.start_xy = start_xy
         self.end_xy = end_xy
         self.headcode = None
-        self.signal = signal(aspect.RED, self.start_xy[0], self.start_xy[1])
+        self.signal = signal(pygame, screen, aspect.RED, self.start_xy[0], self.start_xy[1])
 
     def get_route_coord(self):
         print ('Returning Route: ', self.start_xy, self.end_xy)
@@ -123,43 +125,7 @@ class aspect(Enum):
     YELLOW = (255, 255, 0)
     GREEN = (0, 128, 0)
 
-class signal(object): # A signal is at the start of a route
 
-    def __init__(self, colour, x, y):
-        self.colour = colour
-        self.x = x
-        self.y = y
-        self.create_signal_coords()
-        self.click = 0
-        self.aspect = [aspect.RED, aspect.YELLOW, aspect.GREEN]
-
-    def create_signal_coords(self):
-        self.bulb_position = (self.x-10, self.y-22)
-        self.stalk = [(self.x, self.y), (self.x, self.y-22), (self.x - 8, self.y-22)]
-
-    def iterate_aspect(self):
-        self.click +=1
-
-        if self.click >= 3:
-            self.click = 0
-
-        for i,x in enumerate(self.aspect):
-            if i == self.click:
-                self.colour = x
-
-    def draw(self):
-        border_radius = 5
-        colour_radius = border_radius - 2
-        pygame.draw.aalines(screen, (0, 0, 0), False, self.stalk)
-        self.bulb_space = pygame.draw.circle(screen, (0, 0, 0), self.bulb_position, border_radius)
-        
-        if (self.colour.name == 'YELLOW'):
-            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), colour_radius)
-        elif (self.colour.name == 'GREEN'):
-            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), colour_radius)
-        else:
-            pygame.draw.circle(screen, self.colour.value, (self.x-10,self.y-22), colour_radius)
-        
 class journey(object):
 
     valid_order_routes = [] # remove this
@@ -202,6 +168,8 @@ def redrawGameWindow():
 
     train.draw()
 
+    point1.draw(pygame, screen)
+
     if train.allow_move:
         if train.get_current_route().signal.colour != aspect.RED:
             train.step(screen)
@@ -215,7 +183,6 @@ journey.add_route(route_set_1.route1)
 journey.add_route(route_set_1.route2)
 journey.add_route(route_set_1.route3)
 
-
 # add paths to points. rename journey to be path
 # toggle points setting
 # update paths presented to train
@@ -223,6 +190,16 @@ journey.add_route(route_set_1.route3)
 # journey.add_route(path1.route4)
 # journey.add_route(path1.route5)
 # journey.add_route(path1.route6)
+
+point1 = point()
+path1 = []
+path1.append(route_set_2.route0)
+path1.append(route_set_2.route1)
+path1.append(route_set_2.route2)
+
+for p in path1:
+    point1.add_paths(route(p['routeName'], p['start_xy'], p['end_xy']))
+
 
 train = train('1A11', journey)
 
