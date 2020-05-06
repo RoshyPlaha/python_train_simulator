@@ -34,3 +34,12 @@ class point(object):
         for path in self.route_paths:
             for route in path:
                 route.draw()
+        
+        # draw triangle below point
+        triangle_top_point_coord_x = self.route_paths[0][0].get_start_route_coord()[0]
+        triangle_top_point_coord_y = self.route_paths[0][0].get_start_route_coord()[1]+10
+
+        edge_distance = 5
+        triangle_left_point_coord_xy = (triangle_top_point_coord_x-edge_distance, triangle_top_point_coord_y+edge_distance)
+        triangle_right_point_coord_xy = (triangle_top_point_coord_x+edge_distance, triangle_top_point_coord_y+edge_distance)
+        self.point_space = pygame.draw.polygon(screen, (0, 102, 204), [(triangle_top_point_coord_x, triangle_top_point_coord_y), triangle_left_point_coord_xy, triangle_right_point_coord_xy], 2)

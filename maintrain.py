@@ -2,7 +2,7 @@ import pygame
 import pygame.math as math
 import math as mathpy
 from enum import Enum
-from routes_list import route_set_1, route_set_2, route_set_3
+from routes_list import route_set_1, route_set_2, route_set_3, route_set_4, route_set_5
 from point import point
 from signal import signal, aspect
 
@@ -161,6 +161,7 @@ def redrawGameWindow():
     train.draw()
 
     point1.draw(pygame, screen)
+    point2.draw(pygame, screen)
 
     if train.allow_move:
         if train.get_current_route().signal.colour != aspect.RED:
@@ -197,6 +198,20 @@ path_b.append(route(route_set_3.route2['routeName'], route_set_3.route2['start_x
 point1.add_paths(path_a)
 point1.add_paths(path_b)
 
+point2 = point()
+path_c = []
+path_c.append(route(route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
+path_c.append(route(route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
+path_c.append(route(route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
+
+path_d = []
+path_d.append(route(route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
+path_d.append(route(route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
+path_d.append(route(route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
+
+point2.add_paths(path_c)
+point2.add_paths(path_d)
+
 train = train('1A11', journey)
 
 clock = pygame.time.Clock()
@@ -210,10 +225,19 @@ while run:
         
         if event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
+
+            # check signal for route
             for route in journey.routes():
                 if(route.signal.bulb_space.collidepoint(pos)):
                     route.signal.iterate_aspect()
 
+            if(point1.point_space.collidepoint(pos)):
+                print('hit me')
+
+            if(point2.point_space.collidepoint(pos)):
+                print('hit me')
+
+    
     if shootLoop > 0:
         shootLoop += 1
     if shootLoop > 3:
