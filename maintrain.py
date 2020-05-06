@@ -233,9 +233,11 @@ while run:
 
             if(point1.point_space.collidepoint(pos)):
                 print('hit me')
+                point1.switch_path()
 
             if(point2.point_space.collidepoint(pos)):
                 print('hit me')
+                point2.switch_path()
 
     
     if shootLoop > 0:
