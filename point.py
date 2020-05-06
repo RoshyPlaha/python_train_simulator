@@ -8,9 +8,6 @@ class point(abstract_point.abstract_point):
         self.active_position = 0
         self.route_paths = []
 
-    def next_point(self):
-        print('ye')
-
     def add_paths(self, p):
         if len(self.route_paths) <= 2: # max paths for a point
             self.route_paths.append(p)

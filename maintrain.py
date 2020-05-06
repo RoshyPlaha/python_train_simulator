@@ -212,6 +212,9 @@ path_d.append(route(route_set_5.route2['routeName'], route_set_5.route2['start_x
 point2.add_paths(path_c)
 point2.add_paths(path_d)
 
+# lets add point to point
+point1.add_next_point(point2)
+point1.traverse_active_paths() # returns all paths and routes within, based on active point position
 train = train('1A11', journey)
 
 clock = pygame.time.Clock()
@@ -239,7 +242,6 @@ while run:
                 print('hit me')
                 point2.switch_path()
 
-    
     if shootLoop > 0:
         shootLoop += 1
     if shootLoop > 3:
