@@ -1,10 +1,8 @@
-import abstract_point
-class point(abstract_point.abstract_point):
+class point(object):
 
     route_paths = []
 
-    def __init__(self, point=None):
-        self.point = point
+    def __init__(self):
         self.active_position = 0
         self.route_paths = []
 
@@ -27,6 +25,17 @@ class point(abstract_point.abstract_point):
         for i, p in enumerate(self.route_paths):
             if i == self.active_position:
                 return p
+
+    # traversed_routes = []
+    def traverse_journey(self):
+        path = self.get_active_path()
+        print('active path is: ', path[2].point)
+        for route in path:
+            if route.point:
+                print('found another route')
+                return route.point
+        return None
+
     
     def draw(self, pygame, screen):
         for path in self.route_paths:
