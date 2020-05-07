@@ -1,10 +1,10 @@
 import unittest
 from point import point
+from routes_list import route_set_2, route_set_3, route_set_4, route_set_5
 
 class Testpoint(unittest.TestCase):
 
     def test_with_two_paths(self):
-
         head = point()
         p = point(head)
 
@@ -68,6 +68,38 @@ class Testpoint(unittest.TestCase):
 
         selected_list = p.switch_path()
         self.assertEqual(None, selected_list)
+
+    def test_traverse_paths_in_points(self):
+        point1 = point()
+        path_a = []
+        path_a.append(route(route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
+        path_a.append(route(route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
+        path_a.append(route(route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
+
+        path_b = []
+        path_b.append(route(route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
+        path_b.append(route(route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
+        path_b.append(route(route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy']))
+
+        point1.add_paths(path_a)
+        point1.add_paths(path_b)
+
+        point2 = point()
+        path_c = []
+        path_c.append(route(route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
+        path_c.append(route(route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
+        path_c.append(route(route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
+
+        path_d = []
+        path_d.append(route(route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
+        path_d.append(route(route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
+        path_d.append(route(route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
+
+        point2.add_paths(path_c)
+        point2.add_paths(path_d)
+
+        self.assertIsNotNone(point1)
+        self.assertIsNotNone(point2)
 
 
 if __name__ == '__main__':

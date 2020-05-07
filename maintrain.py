@@ -5,6 +5,7 @@ from enum import Enum
 from routes_list import route_set_1, route_set_2, route_set_3, route_set_4, route_set_5
 from point import point
 from signal import signal, aspect
+from route import route
 
 pygame.init()
 screen = pygame.display.set_mode((1000, 480))
@@ -86,39 +87,6 @@ class train(object):
  
         except IndexError:
             print('end of the road')
-class route(object):
-
-    def __init__(self, routeName, start_xy, end_xy):
-        self.routeName = routeName
-        self.start_xy = start_xy
-        self.end_xy = end_xy
-        self.headcode = None
-        self.signal = signal(pygame, screen, aspect.RED, self.start_xy[0], self.start_xy[1])
-
-    def get_route_coord(self):
-        print ('Returning Route: ', self.start_xy, self.end_xy)
-        return [self.start_xy, self.end_xy]
-
-    def set_headcode(self, headcode):
-        self.headcode = headcode
-
-    def get_headcode(self):
-        return self.headcode
-
-    def get_start_route_coord(self):
-        return self.start_xy
-
-    def get_end_route_coord(self):
-        return self.end_xy
-
-    def get_signal(self):
-        return self.signal()
-
-    def draw(self):
-        start = self.start_xy
-        end = self.end_xy
-        pygame.draw.aalines(screen, (0, 0, 0), False, [start, end])
-        self.signal.draw()
 
 class journey(object):
 
@@ -141,10 +109,10 @@ class journey(object):
                 print('cant add it wont add it')
             else:
                 self.valid_order_routes.append(routex)
-                self.ordered_routes.append(route(routex['routeName'], routex['start_xy'], routex['end_xy']))
+                self.ordered_routes.append(route(pygame, screen, routex['routeName'], routex['start_xy'], routex['end_xy']))
         else:
             self.valid_order_routes.append(routex)
-            self.ordered_routes.append(route(routex['routeName'], routex['start_xy'], routex['end_xy']))
+            self.ordered_routes.append(route(pygame, screen, routex['routeName'], routex['start_xy'], routex['end_xy']))
     
     def routes(self):
         return self.ordered_routes
@@ -180,34 +148,30 @@ journey.add_route(route_set_1.route3)
 # toggle points setting
 # update paths presented to train
 
-# journey.add_route(path1.route4)
-# journey.add_route(path1.route5)
-# journey.add_route(path1.route6)
-
 point1 = point()
 path_a = []
-path_a.append(route(route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
-path_a.append(route(route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
-path_a.append(route(route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
+path_a.append(route(pygame, screen, route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
+path_a.append(route(pygame, screen, route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
+path_a.append(route(pygame, screen, route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
 
 path_b = []
-path_b.append(route(route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
-path_b.append(route(route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
-path_b.append(route(route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy']))
+path_b.append(route(pygame, screen, route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
+path_b.append(route(pygame, screen, route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
+path_b.append(route(pygame, screen, route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy']))
 
 point1.add_paths(path_a)
 point1.add_paths(path_b)
 
 point2 = point()
 path_c = []
-path_c.append(route(route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
-path_c.append(route(route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
-path_c.append(route(route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
+path_c.append(route(pygame, screen, route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
+path_c.append(route(pygame, screen, route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
+path_c.append(route(pygame, screen, route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
 
 path_d = []
-path_d.append(route(route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
-path_d.append(route(route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
-path_d.append(route(route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
+path_d.append(route(pygame, screen, route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
+path_d.append(route(pygame, screen, route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
+path_d.append(route(pygame, screen, route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
 
 point2.add_paths(path_c)
 point2.add_paths(path_d)
