@@ -1,6 +1,7 @@
 import unittest
 from point import point
 from routes_list import route_set_2, route_set_3, route_set_4, route_set_5
+from route import route
 
 class Testpoint(unittest.TestCase):
 
@@ -70,33 +71,40 @@ class Testpoint(unittest.TestCase):
         self.assertEqual(None, selected_list)
 
     def test_traverse_paths_in_points(self):
-        point1 = point()
         path_a = []
-        path_a.append(route(route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
-        path_a.append(route(route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
-        path_a.append(route(route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
+        pygame = None
+        screen = None
+        path_a.append(route(pygame, screen, route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
+        path_a.append(route(pygame, screen, route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
+        path_a.append(route(pygame, screen, route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
 
         path_b = []
-        path_b.append(route(route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
-        path_b.append(route(route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
-        path_b.append(route(route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy']))
+        path_b.append(route(pygame, screen, route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
+        path_b.append(route(pygame, screen, route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
+        path_b.append(route(pygame, screen, route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy']))
 
+        point1 = point()
         point1.add_paths(path_a)
         point1.add_paths(path_b)
 
-        point2 = point()
         path_c = []
-        path_c.append(route(route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
-        path_c.append(route(route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
-        path_c.append(route(route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
+        path_c.append(route(pygame, screen, route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
+        path_c.append(route(pygame, screen, route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
+        path_c.append(route(pygame, screen, route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
 
         path_d = []
-        path_d.append(route(route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
-        path_d.append(route(route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
-        path_d.append(route(route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
+        path_d.append(route(pygame, screen, route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
+        path_d.append(route(pygame, screen, route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
+        path_d.append(route(pygame, screen, route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
 
+        point2 = point()
         point2.add_paths(path_c)
         point2.add_paths(path_d)
+
+        # lets add point to point
+        point1.add_next_point(point2)
+        point1.traverse_active_paths() # returns all paths and routes within, based on active point position
+
 
         self.assertIsNotNone(point1)
         self.assertIsNotNone(point2)
