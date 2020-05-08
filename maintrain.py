@@ -128,10 +128,9 @@ def redrawGameWindow():
 
     train.draw()
 
-    point1.draw(pygame, screen)
-    point2.draw(pygame, screen)
-    point3.draw(pygame, screen)
-
+    for p in points:
+        p.draw(pygame, screen)
+        
     if train.allow_move:
         if train.get_current_route().signal.colour != aspect.RED:
             train.step(screen)
@@ -183,6 +182,8 @@ point1 = point()
 point1.add_paths(path_a)
 point1.add_paths(path_b)
 
+points = [point1, point2, point3]
+
 # lets add point to point
 # returns all paths and routes within, based on active point position
 train = train('1A11', journey)
@@ -204,17 +205,10 @@ while run:
                 if(route.signal.bulb_space.collidepoint(pos)):
                     route.signal.iterate_aspect()
 
-            if(point1.point_space.collidepoint(pos)):
-                print('hit me')
-                point1.switch_path()
-
-            if(point2.point_space.collidepoint(pos)):
-                print('hit me')
-                point2.switch_path()
-
-            if(point3.point_space.collidepoint(pos)):
-                print('hit me')
-                point3.switch_path()
+            for p in points:
+                if(p.point_space.collidepoint(pos)):
+                    print('hit me')
+                    p.switch_path()
 
     if shootLoop > 0:
         shootLoop += 1
