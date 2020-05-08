@@ -14,8 +14,8 @@ class route(abstract_route):
         if (associate_point is not None):
             print('well gosh, im normally None')
             self.add_next_point(associate_point)
-        else:
-            self.signal = signal(pygame, screen, aspect.RED, self.start_xy[0], self.start_xy[1])
+
+        self.signal = signal(pygame, screen, aspect.RED, self.start_xy[0], self.start_xy[1])
 
     def get_route_coord(self):
         print ('Returning Route: ', self.start_xy, self.end_xy)

@@ -81,8 +81,6 @@ class Traverse_util(unittest.TestCase):
         point1.add_paths(path_a)
         point1.add_paths(path_b)
 
-        active_path = point1.get_active_path()
-
         # active route is now the second route added
         next_active_path = point1.switch_path()
         self.assertEquals('route3', next_active_path[0].get_route_name())

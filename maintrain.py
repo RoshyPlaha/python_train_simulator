@@ -176,6 +176,8 @@ path_d.append(route(pygame, screen, route_set_5.route2['routeName'], route_set_5
 point2.add_paths(path_c)
 point2.add_paths(path_d)
 
+# lets add point to point
+# returns all paths and routes within, based on active point position
 train = train('1A11', journey)
 
 clock = pygame.time.Clock()
