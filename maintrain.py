@@ -2,7 +2,7 @@ import pygame
 import pygame.math as math
 import math as mathpy
 from enum import Enum
-from routes_list import route_set_1, route_set_2, route_set_3, route_set_4, route_set_5
+from routes_list import route_set_1, route_set_2, route_set_3, route_set_4, route_set_5, route_set_6
 from point import point
 from signal import signal, aspect
 from route import route
@@ -130,6 +130,7 @@ def redrawGameWindow():
 
     point1.draw(pygame, screen)
     point2.draw(pygame, screen)
+    point3.draw(pygame, screen)
 
     if train.allow_move:
         if train.get_current_route().signal.colour != aspect.RED:
@@ -148,33 +149,39 @@ journey.add_route(route_set_1.route3)
 # toggle points setting
 # update paths presented to train
 
-point1 = point()
-path_a = []
-path_a.append(route(pygame, screen, route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
-path_a.append(route(pygame, screen, route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
-path_a.append(route(pygame, screen, route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
+path_f = []
+path_f.append(route(pygame, screen, route_set_6.route0['routeName'], route_set_6.route0['start_xy'], route_set_6.route0['end_xy']))
+path_f.append(route(pygame, screen, route_set_6.route1['routeName'], route_set_6.route1['start_xy'], route_set_6.route1['end_xy']))
+path_f.append(route(pygame, screen, route_set_6.route2['routeName'], route_set_6.route2['start_xy'], route_set_6.route2['end_xy']))
 
-path_b = []
-path_b.append(route(pygame, screen, route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
-path_b.append(route(pygame, screen, route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
-path_b.append(route(pygame, screen, route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy']))
+point3 = point()
+point3.add_paths(path_f)
 
-point1.add_paths(path_a)
-point1.add_paths(path_b)
-
-point2 = point()
 path_c = []
 path_c.append(route(pygame, screen, route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
-path_c.append(route(pygame, screen, route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
+path_c.append(route(pygame, screen, route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy'], point3))
 path_c.append(route(pygame, screen, route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
-
 path_d = []
 path_d.append(route(pygame, screen, route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
 path_d.append(route(pygame, screen, route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
 path_d.append(route(pygame, screen, route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
 
+point2 = point()
 point2.add_paths(path_c)
 point2.add_paths(path_d)
+
+path_a = []
+path_a.append(route(pygame, screen, route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
+path_a.append(route(pygame, screen, route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
+path_a.append(route(pygame, screen, route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
+path_b = []
+path_b.append(route(pygame, screen, route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
+path_b.append(route(pygame, screen, route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
+path_b.append(route(pygame, screen, route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy'], point2))
+
+point1 = point()
+point1.add_paths(path_a)
+point1.add_paths(path_b)
 
 # lets add point to point
 # returns all paths and routes within, based on active point position
@@ -204,6 +211,10 @@ while run:
             if(point2.point_space.collidepoint(pos)):
                 print('hit me')
                 point2.switch_path()
+
+            if(point3.point_space.collidepoint(pos)):
+                print('hit me')
+                point3.switch_path()
 
     if shootLoop > 0:
         shootLoop += 1

@@ -16,6 +16,6 @@ route2 = (
     {
         'routeName': 'route4',
         'start_xy': (350, 410),
-        'end_xy': (380, 430)
+        'end_xy': (350, 410)
     }
 )
