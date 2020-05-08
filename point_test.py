@@ -90,48 +90,5 @@ class Testpoint(unittest.TestCase):
         next_active_path = point1.switch_path()
         self.assertEquals('route3', next_active_path[0].get_route_name())
 
-    def test_traverse_paths_in_points(self):
-        pygame = None
-        screen = None
-
-        path_c = []
-        path_c.append(route(pygame, screen, route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
-        path_c.append(route(pygame, screen, route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
-        path_c.append(route(pygame, screen, route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
-        path_d = []
-        path_d.append(route(pygame, screen, route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
-        path_d.append(route(pygame, screen, route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
-        path_d.append(route(pygame, screen, route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
-
-        point2 = point()
-        point2.add_paths(path_c)
-        point2.add_paths(path_d)
-
-
-        path_a = []
-        path_a.append(route(pygame, screen, route_set_2.route0['routeName'], route_set_2.route0['start_xy'], route_set_2.route0['end_xy']))
-        path_a.append(route(pygame, screen, route_set_2.route1['routeName'], route_set_2.route1['start_xy'], route_set_2.route1['end_xy']))
-        path_a.append(route(pygame, screen, route_set_2.route2['routeName'], route_set_2.route2['start_xy'], route_set_2.route2['end_xy']))
-        path_b = []
-        path_b.append(route(pygame, screen, route_set_3.route0['routeName'], route_set_3.route0['start_xy'], route_set_3.route0['end_xy']))
-        path_b.append(route(pygame, screen, route_set_3.route1['routeName'], route_set_3.route1['start_xy'], route_set_3.route1['end_xy']))
-        path_b.append(route(pygame, screen, route_set_3.route2['routeName'], route_set_3.route2['start_xy'], route_set_3.route2['end_xy'], point2))
-
-        point1 = point()
-        point1.add_paths(path_a)
-        point1.add_paths(path_b)
-
-        active_path = point1.get_active_path()
-
-         # active route is now the second route added
-        next_active_path = point1.switch_path()
-        self.assertEquals('route3', next_active_path[0].get_route_name())
-        print('associated point for route3 ', next_active_path[2].point)
-
-        # point 2 was associated with one of the routes in the path of point 1
-        associated_point = point1.traverse_journey()
-        self.assertIsNotNone(associated_point)
-
-
 if __name__ == '__main__':
     unittest.main()

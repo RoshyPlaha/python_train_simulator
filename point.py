@@ -29,7 +29,6 @@ class point(object):
     # traversed_routes = []
     def traverse_journey(self):
         path = self.get_active_path()
-        print('active path is: ', path[2].point)
         for route in path:
             if route.point:
                 print('found another route')
