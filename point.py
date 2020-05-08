@@ -25,16 +25,6 @@ class point(object):
         for i, p in enumerate(self.route_paths):
             if i == self.active_position:
                 return p
-
-    # traversed_routes = []
-    def traverse_journey(self):
-        path = self.get_active_path()
-        for route in path:
-            if route.point:
-                print('found another route')
-                return route.point
-        return None
-
     
     def draw(self, pygame, screen):
         for path in self.route_paths:
