@@ -1,5 +1,5 @@
 import unittest
-from routes_list import route_set_2, route_set_3, route_set_4, route_set_5
+from routes_list import route_set_2, route_set_3, route_set_4, route_set_5, route_set_6
 from route import route
 from point import point
 from traverse_util import traverse
@@ -43,27 +43,17 @@ class Traverse_util(unittest.TestCase):
         self.assertEquals('route3', next_active_path[0].get_route_name())
         print('associated point for route3 ', next_active_path[2].point)
 
-        # point 2 was associated with one of the routes in the path of point 1
-        associated_point = point1.traverse_journey()
-        self.assertIsNotNone(associated_point)
-
     def test_traverse_paths_in_points_two_levels(self):
         pygame = None
         screen = None
 
         path_f = []
-        path_f.append(route(pygame, screen, route_set_5.route0['routeName'], route_set_5.route0['start_xy'], route_set_5.route0['end_xy']))
-        path_f.append(route(pygame, screen, route_set_5.route1['routeName'], route_set_5.route1['start_xy'], route_set_5.route1['end_xy']))
-        path_f.append(route(pygame, screen, route_set_5.route2['routeName'], route_set_5.route2['start_xy'], route_set_5.route2['end_xy']))
+        path_f.append(route(pygame, screen, route_set_6.route0['routeName'], route_set_6.route0['start_xy'], route_set_6.route0['end_xy']))
+        path_f.append(route(pygame, screen, route_set_6.route1['routeName'], route_set_6.route1['start_xy'], route_set_6.route1['end_xy']))
+        path_f.append(route(pygame, screen, route_set_6.route2['routeName'], route_set_6.route2['start_xy'], route_set_6.route2['end_xy']))
 
-        path_e = []
-        path_e.append(route(pygame, screen, route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
-        path_e.append(route(pygame, screen, route_set_4.route1['routeName'], route_set_4.route1['start_xy'], route_set_4.route1['end_xy']))
-        path_e.append(route(pygame, screen, route_set_4.route2['routeName'], route_set_4.route2['start_xy'], route_set_4.route2['end_xy']))
-       
         point3 = point()
         point3.add_paths(path_f)
-        point3.add_paths(path_e)
 
         path_c = []
         path_c.append(route(pygame, screen, route_set_4.route0['routeName'], route_set_4.route0['start_xy'], route_set_4.route0['end_xy']))
@@ -108,9 +98,9 @@ class Traverse_util(unittest.TestCase):
         self.assertEquals('route3', traversed_routes[2].get_route_name())
         self.assertEquals('route4', traversed_routes[3].get_route_name())
         self.assertEquals('route4', traversed_routes[4].get_route_name())
-        self.assertEquals('route5', traversed_routes[5].get_route_name())
-        self.assertEquals('route5', traversed_routes[6].get_route_name())
-        self.assertEquals('route5', traversed_routes[7].get_route_name())
+        self.assertEquals('route6', traversed_routes[5].get_route_name())
+        self.assertEquals('route6', traversed_routes[6].get_route_name())
+        self.assertEquals('route6', traversed_routes[7].get_route_name())
 
 
 if __name__ == '__main__':
