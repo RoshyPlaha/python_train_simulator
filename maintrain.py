@@ -6,6 +6,7 @@ from routes_list import route_set_1, route_set_2, route_set_3, route_set_4, rout
 from point import point
 from signal import signal, aspect
 from route import route
+from traverse_util import traverse
 
 pygame.init()
 screen = pygame.display.set_mode((1000, 480))
@@ -42,11 +43,11 @@ class train(object):
                 self.x -= speed_x
 
             scale = 1
-            if (self.y != self.journey.routes()[self.next_position].get_start_route_coord()[1]):
+            if (self.y != self.journey.routes()[self.next_position].get_start_route_coord()[1]): # this used to be self.y !=
                 scale = scale * -1
                 speed_y = speed * (self.yd / distance) * scale
                 self.y += speed_y
-                self.y = round(self.y, 0)
+                self.y = round(self.y, -1) # this rounds to nearest 10 pixels.
 
     def init_journey(self):
         for x in self.journey.routes():
@@ -55,6 +56,10 @@ class train(object):
         self.x = self.journey.routes()[0].get_start_route_coord()[0]
         self.y = self.journey.routes()[0].get_start_route_coord()[1]
         print(self.x, self.y, 'ooh ok')
+
+    def update_journey(self, journey): # this will always cause a restart at the beginning. Not what we want
+        self.journey = journey
+        self.init_journey()
 
     def show_journey(self):
         return self.journey
@@ -96,7 +101,7 @@ class journey(object):
     def __init__(self):
         pass
 
-    def add_route(self, routex):
+    def add_route(self, routex): # not using this anymore. move to routes or points
 
         if (self.valid_order_routes.__contains__(routex)):
             print('already exists')
@@ -114,23 +119,27 @@ class journey(object):
             self.valid_order_routes.append(routex)
             self.ordered_routes.append(route(pygame, screen, routex['routeName'], routex['start_xy'], routex['end_xy']))
     
+    def set_routes(self, routes): # hacky,
+        self.ordered_routes = routes
+
     def routes(self):
         return self.ordered_routes
 
-    def draw(self):
-        for route in self.ordered_routes: # draw route lines
-            route.draw()
+    # no need to draw a journey anymore
+    # def draw(self):
+    #     for route in self.ordered_routes: # draw route lines
+    #         route.draw()
 
 def redrawGameWindow():
 
     screen.blit(background, (0, 0))
-    journey.draw()
+    # journey.draw()
 
     train.draw()
 
     for p in points:
         p.draw(pygame, screen)
-        
+
     if train.allow_move:
         if train.get_current_route().signal.colour != aspect.RED:
             train.step(screen)
@@ -139,14 +148,6 @@ def redrawGameWindow():
     pygame.display.update()
             
 journey = journey()
-journey.add_route(route_set_1.route0)
-journey.add_route(route_set_1.route1)
-journey.add_route(route_set_1.route2)
-journey.add_route(route_set_1.route3)
-
-# add paths to points. rename journey to be path
-# toggle points setting
-# update paths presented to train
 
 path_f = []
 path_f.append(route(pygame, screen, route_set_6.route0['routeName'], route_set_6.route0['start_xy'], route_set_6.route0['end_xy']))
@@ -186,6 +187,10 @@ points = [point1, point2, point3]
 
 # lets add point to point
 # returns all paths and routes within, based on active point position
+
+trav = traverse()
+routes = trav.traverse_journey(point1, [])
+journey.set_routes(routes)
 train = train('1A11', journey)
 
 clock = pygame.time.Clock()
@@ -209,6 +214,13 @@ while run:
                 if(p.point_space.collidepoint(pos)):
                     print('hit me')
                     p.switch_path()
+
+                    # once switched, if train is behind point, update its route ahead - calculate it again
+                    # routes = trav.traverse_journey(p, [])
+                    routes = trav.traverse_journey(point1, [])
+                    journey.set_routes(routes)
+                    train.update_journey(journey)
+
 
     if shootLoop > 0:
         shootLoop += 1
