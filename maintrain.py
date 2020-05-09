@@ -43,11 +43,11 @@ class train(object):
                 self.x -= speed_x
 
             scale = 1
-            if (self.y <= self.journey.routes()[self.next_position].get_start_route_coord()[1]): # this used to be self.y !=
+            if (self.y != self.journey.routes()[self.next_position].get_start_route_coord()[1]): # this used to be self.y !=
                 scale = scale * -1
                 speed_y = speed * (self.yd / distance) * scale
                 self.y += speed_y
-                self.y = round(self.y, 0)
+                self.y = round(self.y, -1) # this rounds to nearest 10 pixels.
 
     def init_journey(self):
         for x in self.journey.routes():
