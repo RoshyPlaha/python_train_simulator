@@ -32,4 +32,8 @@ The project has a requirements.txt for all dependencies + a lot more. You should
  Please use the test classes provided for point_test and traverse_util_test before trying to add more routes to the main class, as they will help to sanitise routes are OK
  New routes should be added to the 'routes_list' folder at the root of the project
 
+ #### known issues
+ There are two signals overlayed at the bottom of the map - this stops a train moving completely to the last signal state. This can be corrected by updating route 6.
+ If you change a trains route halfway through a journey - it will start from point 1 and move again to its signal position. This is because the entire route of the train is recalculated
+
  
