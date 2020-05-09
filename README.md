@@ -22,6 +22,9 @@ The project has a requirements.txt for all dependencies + a lot more. You should
  Only signals in in the active path can be controlled. This is a limitation in the game
  Once the train reaches the end of its journey - the game will ungracefully crash with an index exception
 
+ To change a trains journey, press the blue triangle button below each path. This is known as the point switch.
+ Trains can have a maximum of 3 paths from a single point and a minimum of 1 path (although this is a bit pointless - but is shown for completeness)
+
  There is no objective of the game really
 
 

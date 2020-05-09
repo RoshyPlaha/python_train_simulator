@@ -7,6 +7,7 @@ from point import point
 from signal import signal, aspect
 from route import route
 from traverse_util import traverse
+from platform_x import platform_x
 
 pygame.init()
 screen = pygame.display.set_mode((1000, 480))
@@ -131,8 +132,11 @@ def redrawGameWindow():
 
     train.draw()
 
-    for p in points:
-        p.draw(pygame, screen)
+    for plat in platforms:
+        plat.draw()
+
+    for point in points:
+        point.draw(pygame, screen)
 
     if train.allow_move:
         if train.get_current_route().signal.colour != aspect.RED:
@@ -182,7 +186,12 @@ points = [point1, point2, point3]
 trav = traverse()
 routes = trav.traverse_journey(point1, [])
 journey.set_routes(routes)
+
 train = train('1A11', journey)
+
+platform_one = platform_x(pygame, screen, (0, 0, 0), 80, 268)
+platform_two = platform_x(pygame, screen, (0, 0, 0), 380, 420)
+platforms = [platform_one, platform_two]
 
 clock = pygame.time.Clock()
 shootLoop = 0
