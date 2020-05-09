@@ -125,15 +125,9 @@ class journey(object):
     def routes(self):
         return self.ordered_routes
 
-    # no need to draw a journey anymore
-    # def draw(self):
-    #     for route in self.ordered_routes: # draw route lines
-    #         route.draw()
-
 def redrawGameWindow():
 
     screen.blit(background, (0, 0))
-    # journey.draw()
 
     train.draw()
 
@@ -185,9 +179,6 @@ point1.add_paths(path_b)
 
 points = [point1, point2, point3]
 
-# lets add point to point
-# returns all paths and routes within, based on active point position
-
 trav = traverse()
 routes = trav.traverse_journey(point1, [])
 journey.set_routes(routes)
@@ -216,11 +207,9 @@ while run:
                     p.switch_path()
 
                     # once switched, if train is behind point, update its route ahead - calculate it again
-                    # routes = trav.traverse_journey(p, [])
                     routes = trav.traverse_journey(point1, [])
                     journey.set_routes(routes)
                     train.update_journey(journey)
-
 
     if shootLoop > 0:
         shootLoop += 1
