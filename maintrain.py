@@ -148,14 +148,6 @@ def redrawGameWindow():
     pygame.display.update()
             
 journey = journey()
-# journey.add_route(route_set_1.route0)
-# journey.add_route(route_set_1.route1)
-# journey.add_route(route_set_1.route2)
-# journey.add_route(route_set_1.route3)
-
-# add paths to points. rename journey to be path
-# toggle points setting
-# update paths presented to train
 
 path_f = []
 path_f.append(route(pygame, screen, route_set_6.route0['routeName'], route_set_6.route0['start_xy'], route_set_6.route0['end_xy']))
@@ -223,8 +215,9 @@ while run:
                     print('hit me')
                     p.switch_path()
 
-                    # once switched, if train is at behind point, update its route ahead - calculate it again
-                    routes = trav.traverse_journey(p, [])
+                    # once switched, if train is behind point, update its route ahead - calculate it again
+                    # routes = trav.traverse_journey(p, [])
+                    routes = trav.traverse_journey(point1, [])
                     journey.set_routes(routes)
                     train.update_journey(journey)
 
