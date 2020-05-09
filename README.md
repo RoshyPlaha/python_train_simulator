@@ -14,6 +14,8 @@
  #### The project
 ![GitHub Logo](images/train_movement.png)
 
+The project has a requirements.txt for all dependencies + a lot more. You should be fine with just the pygame dependency though!
+
  #### Game controls
  Only one train loads by default. To control the train movement press the space bar. Please press the space bar once
  The train will only move if the next signal on its routes is not red
