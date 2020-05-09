@@ -191,7 +191,7 @@ train = train('1A11', journey)
 
 platform_one = platform_x(pygame, screen, (0, 0, 0), 80, 268)
 platform_two = platform_x(pygame, screen, (0, 0, 0), 380, 420)
-platforms = [platform_one, platform_two]
+platforms = [] # [platform_one, platform_two]
 
 clock = pygame.time.Clock()
 shootLoop = 0
