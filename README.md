@@ -17,23 +17,22 @@
 The project has a requirements.txt for all dependencies + a lot more. You should be fine with just the pygame dependency though!
 
  #### Game controls
- Only one train loads by default. To control the train movement press the space bar. Please press the space bar once
- The train will only move if the next signal on its routes is not red
- Only signals in in the active path can be controlled. This is a limitation in the game
- Once the train reaches the end of its journey - the game will ungracefully crash with an index exception
+ Only one train loads by default. To control the train movement press the space bar. Please press the space bar once.
+ The train will only move if the next signal on its routes is not red.
+ Only signals in in the active path can be controlled. This is a limitation in the game.
+ Once the train reaches the end of its journey - the game will ungracefully crash with an index exception.
 
  To change a trains journey, press the blue triangle button below each path. This is known as the point switch.
- Trains can have a maximum of 3 paths from a single point and a minimum of 1 path (although this is a bit pointless - but is shown for completeness)
+ Trains can have a maximum of 3 paths from a single point and a minimum of 1 path (although this is a bit pointless - but is shown for completeness).
 
- There is no objective of the game really
-
+ There is no objective of the game really.
 
  #### Adding new routes and points
- Please use the test classes provided for point_test and traverse_util_test before trying to add more routes to the main class, as they will help to sanitise routes are OK
- New routes should be added to the 'routes_list' folder at the root of the project
+ Please use the test classes provided for point_test and traverse_util_test before trying to add more routes to the main class, as they will help to sanitise routes are OK.
+ New routes should be added to the 'routes_list' folder at the root of the project.
 
  #### known issues
  There are two signals overlayed at the bottom of the map - this stops a train moving completely to the last signal state. This can be corrected by updating route 4 and 6.
- If you change a trains route halfway through a journey - it will start from point 1 and move again to its signal position. This is because the entire route of the train is recalculated
+ If you change a trains route halfway through a journey - it will start from point 1 and move again to its signal position. This is because the entire route of the train is recalculated.
 
  
