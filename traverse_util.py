@@ -2,7 +2,7 @@
 class traverse(object):
 
 # given a point, find all the routes to get to the end of the line, looking for points
-    def traverse_journey(self, point, path_routes): # start by passing in path_routes = []
+    def traverse_journey(self, point, path_routes=[]): # start by passing in path_routes = []
 
         if (point is not None):
             path = point.get_active_path()
